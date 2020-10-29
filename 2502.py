@@ -1,7 +1,7 @@
 import re
 
 ent = (int(x) for x in input().split())
-x,y = ent
+_,y = ent
 tradu = input()
 cripto = input()
 txt = ""
