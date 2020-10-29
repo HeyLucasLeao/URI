@@ -1,7 +1,7 @@
 import re
 
 ent = (int(x) for x in input().split())
-_,y = ent
+_, y = ent
 tradu = input()
 cripto = input()
 txt = ""
@@ -9,7 +9,7 @@ txt = ""
 for _ in range(y):
     txt += input() + '\n'
 
-iter_cripto = tuple((x,y) for x,y in zip(cripto,tradu))
+iter_cripto = tuple((x, y) for x, y in zip(cripto,tradu))
 
 def convert_to_binary_str(inp: str) -> str:
     return (''.join(format(ord(x), 'b') for x in inp))
