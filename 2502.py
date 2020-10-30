@@ -1,46 +1,35 @@
 import re
+while True:
+    try:
+        ent = (int(x) for x in input().split())
+        _, y = ent
+        tradu = input()
+        cripto = input()
+        tradu = tradu.lower()
+        cripto = cripto.lower()
+        txt = ""
+        for _ in range(y): txt += input() + '\n'
 
-ent = (int(x) for x in input().split())
-_, y = ent
-tradu = input()
-cripto = input()
-txt = ""
+        def to_unicode(inp: str) -> str: return ''.join(format(ord(x)) for x in inp)
 
-for _ in range(y):
-    txt += input() + '\n'
+        dicionario = dict(tuple((x, y) for x, y in zip(cripto, tradu)))
+        dici_upper = dict(tuple((x, y) for x, y in zip(cripto.upper(), tradu.upper())))
+        dici_inve = dict(tuple((x, y) for x, y in zip(tradu.upper(), cripto.upper())))
+        
+        def descripto(txt: str) -> str:
+            res = txt
+            for cripto,tradu in dicionario.items():
+                res = re.sub(f"[{cripto}]+",f"_{to_unicode(tradu)}_",res)
+                res = re.sub(f"[{tradu}]+", cripto,res)
+                res = re.sub(f"_{to_unicode(tradu)}_", tradu,res)
+            for i in range(len(res)):
+                if res[i].isupper() and res[i] in dici_upper.keys():
+                    res = res[:i] + dici_upper[res[i]] + res[i + 1:]
+                elif res[i].isupper() and res[i] in dici_inve.keys():
+                    res = res[:i] + dici_inve[res[i]] + res[i + 1:]
+            return res
 
-iter_cripto = tuple((x, y) for x, y in zip(cripto,tradu))
-
-def convert_to_binary_str(inp: str) -> str:
-    return (''.join(format(ord(x), 'b') for x in inp))
-
-
-def regex_to_lower(txt: str) -> str:
-    res = txt
-    for cripto,tradu in iter_cripto:
-        res = re.sub(f"[{cripto.lower()}]+",f"_{convert_to_binary_str(tradu.lower())}_",res)
-
-    for cripto,tradu in iter_cripto:
-        res = re.sub(f"[{tradu.lower()}]+", cripto.lower(),res)
-
-    for cripto,tradu in iter_cripto:
-        res = re.sub(f"_{convert_to_binary_str(tradu.lower())}_", tradu.lower(),res)
-    return res
-    
-def regex_to_upper(res: str) -> str:
-    for cripto,tradu in iter_cripto:
-        res = re.sub(f"[{cripto.upper()}]+",f"_{convert_to_binary_str(tradu.upper())}_",res)
-
-    for cripto,tradu in iter_cripto:
-        res = re.sub(f"[{tradu.upper()}]+", cripto.upper(),res)
-
-    for cripto,tradu in iter_cripto:
-        res = re.sub(f"_{convert_to_binary_str(tradu.upper())}_", tradu.upper(),res)
-    return res
-
-def descripto(inp: str) -> str:
-    return regex_to_upper(regex_to_lower(inp))
-
-
-
-print(descripto(txt))
+        print(descripto(txt))
+    except:
+        break
+        
