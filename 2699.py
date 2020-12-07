@@ -22,28 +22,31 @@ def dados():
         elif inp[i] == "?":
             inp[i] = '0'
     inp = [int(x) for x in inp]
-
     return inp, mult, idx, ult, ignorar_idx
+
+
+def get_digit(number, n):
+    return number // 10**n % 10
 
 
 def verificar():
     inp, mult, idx, ult, ignorar_idx = dados()
-    while not int("".join([str(x) for x in inp])) % mult == 0:
-        print(*inp, sep="")
-        if inp[ult] == 9:
+    res = int("".join([str(x) for x in inp]))
+    while not res % mult == 0:
+        if get_digit(res, len(inp) - ult - 1) == 9:
             return '*'
-        elif inp[idx] == 9:
-            inp[idx] = 0
+        elif get_digit(res, len(inp) - idx - 1) == 9:
+            res -= 9*10**(len(inp) - idx - 1)
             for y in reversed(range(len(inp[:idx]))):
-                if inp[y] == 9 and not y in ignorar_idx:
-                    inp[y] = 0
+                if get_digit(res, len(inp) - y - 1) == 9 and not y in ignorar_idx:
+                    res -= 9*10**(len(inp) - y - 1)
                     continue
                 elif not y in ignorar_idx:
-                    inp[y] += 1
+                    res += 10**(len(inp) - y - 1)
                     break
         else:
-            inp[idx] += 1
-    return inp
+            res += 10**(len(inp) - idx - 1)
+    return res
 
 
-print(*verificar(), sep="")
+print(verificar())
