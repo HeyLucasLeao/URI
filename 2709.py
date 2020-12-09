@@ -1,22 +1,10 @@
-def primo(res):
-    if res == 2:
-        return "You’re a coastal aircraft, Robbie, a large silver aircraft."
-    elif res < 2:
+def checar_primo(n):
+    if n <= 1:
         return "Bad boy! I’ll hit you."
-    else:
-        test = list(range(2, res))
-    if res % 2 == 0:  # par
-        test = [x for x in test if x % 2 == 0]
-        for n in test:
-            if res % n == 0:
-                return "Bad boy! I’ll hit you."
-        return "You’re a coastal aircraft, Robbie, a large silver aircraft."
-    elif res % 2 != 0:  # impar
-        test = [x for x in test if x % 2 != 0]
-        for n in test:
-            if res % n == 0:
-                return "Bad boy! I’ll hit you."
-        return "You’re a coastal aircraft, Robbie, a large silver aircraft."
+    for i in range(2, n):
+        if n % i == 0:
+            return "Bad boy! I’ll hit you."
+    return "You’re a coastal aircraft, Robbie, a large silver aircraft."
 
 
 while True:
@@ -27,6 +15,6 @@ while True:
         inp.sort(reverse=True)
         lista = [inp[i] for i in range(0, len(inp), pulos)]
         res = sum(lista)
-        print(primo(res))
+        print(checar_primo(res))
     except EOFError:
         break
