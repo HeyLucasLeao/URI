@@ -7,9 +7,9 @@ while True:
         while len(inp) < x:
             inp.extend(input().split())
         inp = [int(x) for x in inp]
-        metade = floor(len(inp)/2) + 1
-        rangel = [inp[i] for i in range(metade)]
-        gugu = [inp[i] for i in range(metade, len(inp))]
+        mediana = floor(len(inp)/2) + 1
+        rangel = inp[:mediana]
+        gugu = inp[mediana:]
         total = sum(rangel) + sum(gugu)
         if sum(rangel)/total > sum(gugu)/total:
             gugu.append(rangel[len(rangel) - 1])
