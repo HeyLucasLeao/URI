@@ -26,15 +26,14 @@ def golpe():
     inp = input().split()
     var = inp[0]
     nivel, x1, y1 = [int(x) for x in inp[1:]]
+    delta_x = x1 - max(x0, min(x1, x0 + w))
+    delta_y = y1 - max(y0, min(y1, y0 + h))
 
-    if dici[var].level[nivel] >= menor_distancia(x1, x0, y0, y1):
+    if dici[var].level[nivel]**2 >= (delta_x**2 + delta_y**2):
         return dici[var].dano
     else:
         return 0
 
 
-output = []
 for _ in range(int(input())):
-    output.append(golpe())
-
-print(*output, sep="\n")
+    print(golpe())

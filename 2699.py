@@ -5,6 +5,7 @@ def dados():
     idx = 0
     ult = 0
     ignorar_idx = []
+    ult_casa = 0
     for x in range(len(inp)):  # última casa decimal
         if inp[x] == '?':
             ult = x
@@ -18,10 +19,11 @@ def dados():
             break
     for i in range(len(inp)):
         if inp[0] == "?":
-            inp[0] = '1'
+            inp[0] = '9'
         elif inp[i] == "?":
-            inp[i] = '0'
+            inp[i] = '9'
     inp = [int(x) for x in inp]
+
     return inp, mult, idx, ult, ignorar_idx
 
 
@@ -32,21 +34,20 @@ def get_digit(number, n):
 def verificar():
     inp, mult, idx, ult, ignorar_idx = dados()
     res = int("".join([str(x) for x in inp]))
-    while not res % mult == 0:
-        if get_digit(res, len(inp) - ult - 1) == 9:
-            return '*'
-        elif get_digit(res, len(inp) - idx - 1) == 9:
-            res -= 9*10**(len(inp) - idx - 1)
-            for y in reversed(range(len(inp[:idx]))):
-                if get_digit(res, len(inp) - y - 1) == 9 and not y in ignorar_idx:
-                    res -= 9*10**(len(inp) - y - 1)
+    nres = res
+    while not int("".join([str(x) for x in inp])) % mult == 0:
+        print(inp)
+        if inp[ult] == 0:
+            for y in range(len(inp[:idx])):
+                if inp[y] == 0 and not y in ignorar_idx:
+                    inp[y] = 9
                     continue
                 elif not y in ignorar_idx:
-                    res += 10**(len(inp) - y - 1)
+                    inp[y] -= 1
                     break
         else:
-            res += 10**(len(inp) - idx - 1)
-    return res
+            inp[ult] -= 1
+    return inp
 
 
 print(verificar())
